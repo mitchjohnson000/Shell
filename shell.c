@@ -200,7 +200,7 @@ int main(void){
 			args = split_line(cmds,background,history,flag,should_run);
 			history = checkSize(history);
 			pid = fork();
-			if(pid == 0){
+			if(pid == 0){ 
 				if(*flag == 0){
 					int error = execvp(args[0],args);
 					if(error == -1){
@@ -210,18 +210,14 @@ int main(void){
 				}
 				else if(*flag == 1){
 					getHistory(history);
-					free(line);
-					free(args);
 					exit(0);
 				}
-				free(line);
-				free(args);
 			}
 			if(*background == 0){
 				waitpid(pid,NULL,0);
 			}
 			else{
-				printf("PID %d\n", pid);
+				//don't wait
 			}
 			free(background);
 			free(flag);
@@ -234,5 +230,7 @@ int main(void){
 	}
 	free(history);
 	free(should_run);
+	free(args);
+	free(line);
 	return 0;
 }
